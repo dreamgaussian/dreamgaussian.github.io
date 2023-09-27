@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bulma css template -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <!-- ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- model viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+  <title>
+    DreamGaussian
+  </title>
+  <link rel="icon" href="icon.ico">
+</head>
+<body>
+  <section class="section">
+
+  <div class="container has-text-centered">
+    <!-- paper title -->
+    <p class="title is-3"> DreamGaussian: Generative Gaussian Splatting for Efficient 3D Creation </p>
+    <!-- publication -->
+    <p class="subtitle is-4"> Arxiv 2023 </p>
+    <!-- authors -->
+    <p class="title is-5 mt-2"> 
+      <a href="https://me.kiui.moe/" target="_blank">Jiaxiang Tang</a><sup>1</sup>, 
+      <a href="https://jiawei-ren.github.io/" target="_blank">Jiawei Ren</a><sup>2</sup>, 
+      <a href="https://hangz-nju-cuhk.github.io/" target="_blank">Hang Zhou</a><sup>3</sup>, 
+      <a href="https://liuziwei7.github.io/" target="_blank">Ziwei Liu</a><sup>2</sup>,
+      <a href="http://www.cis.pku.edu.cn/info/1177/1378.htm" target="_blank">Gang Zeng</a><sup>1</sup>
+    </p>
+    <!-- affiliations -->
+    <p class="subtitle is-5"> 
+      <sup>1</sup> Peking University &nbsp;
+      <sup>2</sup> Nanyang Technological University &nbsp;
+      <sup>3</sup> Baidu &nbsp;
+    </p>
+
+    <!-- other links -->
+    <div class="is-flex is-justify-content-center">
+      <span class="icon-text mx-1">
+        <a class="button is-dark" href="" role="button" target="_blank"> <span class="icon"> <ion-icon name="document-outline"></ion-icon> </span> <span> Arxiv </span>  </a> 
+      </span>
+      <span class="icon-text mx-1">
+        <a class="button is-dark" href="" role="button" target="_blank"> <span class="icon"> <ion-icon name="logo-github"></ion-icon> </span> <span> Code </span> </a> 
+      </span>
+      <!-- <span class="icon-text mx-1">
+        <a class="button is-dark" href="" role="button" target="_blank"> <span class="icon"> <i class="fa fa-database"></i> </span> <span> Models </span>  </a>
+      </span> -->
+    </div>
+   
+  </div>
+
+  <!-- main container -->
+  <div class="container is-max-desktop has-text-centered">
+
+    <!-- abstract -->
+    <p class="title is-3 mt-5 has-text-centered"> Abstract </p>
+    <p class="content is-size-6 has-text-left">
+Recent advances in 3D content creation mostly leverage optimization-based 3D generation via score distillation sampling (SDS).
+Though promising results have been exhibited, these methods often suffer from slow per-sample optimization, limiting their practical usage. 
+In this paper, we propose <b>DreamGaussian</b>, a novel 3D content generation framework that achieves both efficiency and quality simultaneously. 
+Our key insight is to design a generative 3D Gaussian Splatting model with companioned mesh extraction and texture refinement in UV space.
+In contrast to the occupancy pruning used in Neural Radiance Fields, we demonstrate that the progressive densification of 3D Gaussians converges significantly faster for 3D generative tasks.
+To further enhance the texture quality and facilitate downstream applications, we introduce an efficient algorithm to convert 3D Gaussians into textured meshes and apply a fine-tuning stage to refine the details.
+Extensive experiments demonstrate the superior efficiency and competitive generation quality of our proposed approach.
+Notably, DreamGaussian produces high-quality textured meshes in just 2 minutes from a single-view image, achieving approximately 10 times acceleration compared to existing methods. 
+    </p>
+    
+    <!-- results (videos) -->
+    <p class="title is-3 mt-5 has-text-centered"> Convergence Speed </p>
+
+    <p class="content has-text-centered is-size-5">
+      Our method converges in 2 minutes for image-to-3D while keeping good generation quality.
+    </p>
+    <video muted autoplay controls loop> <source src="videos/accelerate.mp4" type="video/mp4"> </video>
+
+
+    <p class="title is-3 mt-5 has-text-centered"> Image-to-3D </p>
+    <video muted autoplay loop> <source src="videos/image1.mp4" type="video/mp4"> </video>
+    <video muted autoplay loop> <source src="videos/image2.mp4" type="video/mp4"> </video>
+
+    <p class="content has-text-centered is-size-5">
+      We can support images with a non-zero elevation angle too!
+    </p>
+
+    <video muted autoplay loop> <source src="videos/elevation.mp4" type="video/mp4"> </video>
+    
+    <p class="title is-3 mt-5 has-text-centered"> Text-to-3D </p>
+    <video muted autoplay loop> <source src="videos/text.mp4" type="video/mp4"> </video>
+
+    <p class="title is-3 mt-5 has-text-centered"> Text-to-image-to-3D </p>
+    <video muted autoplay loop> <source src="videos/text-to-image-to-3d.mp4" type="video/mp4"> </video>
+
+    <p class="title is-3 mt-5 has-text-centered"> Optimization Progress </p>
+    <table class="table">
+      <tbody>
+        <tr> 
+          <th> <video muted controls autoplay loop> <source src="videos/gui.mp4" type="video/mp4"> </video> </th>
+          <th> <video muted controls autoplay loop> <source src="videos/gui2.mp4" type="video/mp4"> </video> </th>
+        </tr>
+        <tr>
+          <th class="has-text-centered"> Stage 1 (Generative Gaussian Splatting) </th>
+          <th class="has-text-centered"> Stage 2 (Mesh Texture Refinement) </th>
+        </tr>
+    </table>
+    <p class="content has-text-centered is-size-5">
+      Videos are played at the original speed and recorded on an NVIDIA 3070 (8GB).
+    </p>
+
+    <!-- 3d model viewer -->
+    <p class="title is-3 mt-5 has-text-centered"> Exported Meshes </p>
+    <div class="level">
+      <div class="level-item">
+        <model-viewer src="meshes/anya.glb" poster="meshes/anya.jpg" style="width: 100%; height: 300px;" auto-rotate shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+      <div class="level-item">
+        <model-viewer src="meshes/luigi.glb" poster="meshes/luigi.jpg" style="width: 100%; height: 300px;" auto-rotate shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+      <div class="level-item">
+        <model-viewer src="meshes/zelda.glb" poster="meshes/zelda.jpg" style="width: 100%; height: 300px;" auto-rotate shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+      <div class="level-item">
+        <model-viewer src="meshes/toy.glb" poster="meshes/toy.jpg" style="width: 100%; height: 300px;" auto-rotate shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+    </div>
+    
+    <p class="title is-3 mt-5 has-text-centered"> Mesh Animations </p>
+    <p class="content has-text-centered is-size-5">
+      The following results are animated by <a href="https://www.mixamo.com/"> Maximo </a>.
+    </p>
+    <div class="level">
+      <div class="level-item">
+        <model-viewer src="meshes/rabbit_animate.glb" poster="meshes/toy.jpg" style="width: 100%; height: 300px;" autoplay shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+      <div class="level-item">
+        <model-viewer src="meshes/girl_animate.glb" poster="meshes/girl_animate.png" style="width: 100%; height: 300px;" autoplay shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+      <div class="level-item">
+        <model-viewer src="meshes/boy_animate.glb" poster="meshes/boy_animate.png" style="width: 100%; height: 300px;" autoplay shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+      </div>
+    </div>
+
+    <!-- citation -->
+    <div class="card mt-4">
+      <header class="card-header">
+        <p class="card-header-title"> Citation </p>
+      </header>
+      <div class="card-content is-size-5 has-text-left">
+<pre><code>@article{tang2023dreamgaussian,
+  title={DreamGaussian: Generative Gaussian Splatting for Efficient 3D Creation},
+  author={Anonymous},
+  journal={arXiv preprint},
+  year={2023}
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+
+  </section>
+</body>
+</html>
